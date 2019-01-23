@@ -19,6 +19,7 @@ net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["model"])
 req = urllib.request.urlopen('http://10.154.3.199:8000/cgi-bin/camera?resolution=320&page=1548066835550&Language=0')
 arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
 image = cv2.imdecode(arr, -1)
+image = cv2.rotate(image, rotateCode=cv2.ROTATE_180)
 (h, w) = image.shape[:2]
 blob = cv2.dnn.blobFromImage(cv2.resize(image, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
 
@@ -50,3 +51,4 @@ for i in range(0, detections.shape[2]):
 # show the output image
 cv2.imshow("Output", image)
 cv2.waitKey(0)
+
